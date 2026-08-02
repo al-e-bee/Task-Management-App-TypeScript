@@ -6,7 +6,7 @@ const NavigationBar = () => {
     useAuth0();
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
+    <Navbar expand="lg" className="custom-navbar mb-4">
       <Container>
         <Navbar.Brand href="#home">Task Manager</Navbar.Brand>
         <Nav className="ms-auto align-items-center gap-3">

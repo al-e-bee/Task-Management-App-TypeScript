@@ -1,0 +1,9 @@
+.custom-navbar {
+  background-color: #035397;
+}
+
+a.navbar-brand {
+  color: #fff !important;
+
+  font-family: "Playfair Display";
+}

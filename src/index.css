@@ -1,0 +1,40 @@
+body {
+  background-color: #fbfaf8; /*bright snow*/
+  font-family: "Roboto";
+  min-height: 100vh;
+}
+
+.main-title {
+  font-family: "Roboto";
+  text-transform: uppercase;
+}
+
+.card {
+  background-color: #fbfaf8;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+  border: 1px solid rgba(0, 19, 80, 0.102);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 19, 80, 0.102) !important;
+}
+
+.card,
+.btn,
+.badge {
+  border-radius: 8px;
+}
+
+.btn-primary {
+  background-color: #035397;
+  border-color: #035397;
+  color: #fff;
+}
+
+.create-task-btn {
+  background-color: #ff5714;
+  border-color: #ff5714;
+}

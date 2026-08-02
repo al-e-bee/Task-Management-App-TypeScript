@@ -1,7 +1,7 @@
 // TaskDashboard.tsx
 // Implement a dashboard interface for managing tasks, including features like task lists, creation, editing, and deletion.
 import { useState } from "react";
-import { Col, Container, Row, Card, Button, Badge } from "react-bootstrap";
+import { Col, Container, Row, Card, Button } from "react-bootstrap";
 import type { Task } from "../types/tasks";
 import TaskDetail from "./TaskDetail";
 import TaskFormModal from "./TaskModal";
@@ -39,13 +39,17 @@ const TaskDashboard = () => {
       ) : (
         <>
           <Row className="mb-3 align-items-center">
-            <Col>
-              <h2>Task Dashboard</h2>
+            <Col className="d-flex justify-content-center">
+              <h2 className="main-title">Task Dashboard</h2>
             </Col>
+          </Row>
+
+          <Row className="mb-3">
             <Col className="text-end">
               <Button
                 variant="primary"
                 onClick={() => setShowCreateModal(true)}
+                className="create-task-btn"
               >
                 + Create Task
               </Button>
@@ -55,26 +59,21 @@ const TaskDashboard = () => {
           <Row>
             {tasks.map((task) => (
               <Col md={4} key={task.id} className="mb-3">
-                <Card className="h-100 shadow-sm">
-                  <Card.Body className="d-flex flex-column">
+                <Card
+                  className="card h-100 shadow-sm"
+                  style={{
+                    borderLeft: `5px solid ${task.status === "Completed" ? "#10b981" : task.status === "In Progress" ? "#f59e0b" : "#6b7280"}`,
+                  }}
+                >
+                  <Card.Body className="d-flex flex-column align-items-center p-2">
                     <Card.Title>{task.title}</Card.Title>
                     <Card.Text className="text-truncate">
                       {task.description}
                     </Card.Text>
-                    <Card.Subtitle className="mb-3">
-                      <Badge
-                        bg={
-                          task.status === "Completed"
-                            ? "success"
-                            : task.status === "In Progress"
-                              ? "warning"
-                              : "secondary"
-                        }
-                      >
-                        Status: {task.status}
-                      </Badge>
+                    <Card.Subtitle className="mb-3 text-muted">
+                      Status: <strong>{task.status}</strong>
                     </Card.Subtitle>
-                    <div className="mt-auto mb-3 d-flex gap-2">
+                    <div className="mt-auto mb-2 d-flex gap-2">
                       <Button
                         variant="primary"
                         size="sm"
@@ -82,14 +81,15 @@ const TaskDashboard = () => {
                       >
                         View Details
                       </Button>
+
+                      <Button
+                        variant="outline-danger"
+                        size="sm"
+                        onClick={() => handleDelete(task.id)}
+                      >
+                        Delete Task
+                      </Button>
                     </div>
-                    <Button
-                      variant="outline-danger"
-                      size="sm"
-                      onClick={() => handleDelete(task.id)}
-                    >
-                      Delete Task
-                    </Button>
                   </Card.Body>
                 </Card>
               </Col>

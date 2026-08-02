@@ -3,6 +3,7 @@ import { Container, Card, Button } from "react-bootstrap";
 import { TaskProvider } from "./context/TaskContext";
 import TaskDashboard from "./components/TaskDashboard";
 import NavigationBar from "./components/Navbar";
+import "./App.css";
 
 function App() {
   const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
