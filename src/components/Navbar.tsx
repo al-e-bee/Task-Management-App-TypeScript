@@ -2,8 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Navbar, Container, Button } from "react-bootstrap";
 
 const NavigationBar = () => {
-  const { loginWithRedirect, logout, isAuthenticated, user, isLoading } =
-    useAuth0();
+  const { logout, isAuthenticated, user, isLoading } = useAuth0();
 
   return (
     <Navbar expand="lg" className="custom-navbar mb-4 border-bottom">
@@ -27,15 +26,7 @@ const NavigationBar = () => {
                 Log Out
               </Button>
             </>
-          ) : (
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => loginWithRedirect()}
-            >
-              Login
-            </Button>
-          )}
+          ) : null}
         </Navbar.Text>
       </Container>
     </Navbar>
