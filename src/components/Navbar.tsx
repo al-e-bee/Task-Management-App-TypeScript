@@ -7,14 +7,15 @@ const NavigationBar = () => {
   return (
     <Navbar expand="lg" className="custom-navbar mb-4 border-bottom">
       <Container>
-        <Navbar.Brand href="#home">Task Manager</Navbar.Brand>
+        <Navbar.Brand href="#home">Manage Tasks</Navbar.Brand>
         <Navbar.Text className="ms-auto align-items-center gap-3">
           {isLoading ? (
             <span className="text-light">Loading...</span>
           ) : isAuthenticated ? (
             <>
               <span className="custom-nav-text me-2">
-                Welcome, <strong>{user?.name || user?.email}</strong>
+                Welcome to your dashboard{" "}
+                <strong>{user?.name || user?.email}</strong>
               </span>
               <Button
                 variant="dark"

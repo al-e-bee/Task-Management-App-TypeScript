@@ -11,22 +11,6 @@ interface TaskContextType {
   deleteTask: (id: string) => void;
 }
 
-// Initial dummy data
-const initialTasks: Task[] = [
-  {
-    id: "1",
-    title: "Setup Auth0",
-    description: "Configure auth provider",
-    status: "Pending",
-  },
-  {
-    id: "2",
-    title: "Build Dashboard",
-    description: "Display list of tasks",
-    status: "In Progress",
-  },
-];
-
 // 1. Create the Context object
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
 
@@ -34,7 +18,7 @@ const TaskContext = createContext<TaskContextType | undefined>(undefined);
 export const TaskProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   const addTask = (newTaskData: Omit<Task, "id">) => {
     const newTask: Task = {

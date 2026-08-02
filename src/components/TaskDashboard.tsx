@@ -34,7 +34,7 @@ const TaskDashboard = () => {
     borderHeaderColor: string,
   ) => (
     <Col lg={4} md={12} className="mb-4">
-      <div className="card p-3 bg-light rounded border h-100 shadow-sm">
+      <div className="p-3 rounded border h-100 shadow-sm">
         <div
           className="d-flex justify-content-between align-items-center mb-3 pb-2"
           style={{ borderBottom: `3px solid ${borderHeaderColor}` }}
@@ -47,7 +47,7 @@ const TaskDashboard = () => {
 
         {columnTasks.length === 0 ? (
           <p className="text-muted text-center py-4 small">
-            No Tasks in this stage
+            No tasks in this stage
           </p>
         ) : (
           columnTasks.map((task) => (
@@ -109,13 +109,13 @@ const TaskDashboard = () => {
                 onClick={() => setShowCreateModal(true)}
                 className="create-task-btn"
               >
-                Create Task
+                Add Task
               </Button>
             </Col>
           </Row>
 
           <Row>
-            {renderTaskColumn("Pending", pendingTasks, "#1540ff")}
+            {renderTaskColumn("Pending", pendingTasks, "#2b52ff")}
             {renderTaskColumn("In Progress", inProgressTasks, "#ffc107")}
             {renderTaskColumn("Completed", completedTasks, "#198754")}
           </Row>

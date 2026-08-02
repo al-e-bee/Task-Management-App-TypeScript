@@ -47,7 +47,7 @@ const TaskDetail: React.FC<TaskDetailProps> = ({
   };
 
   return (
-    <Card className="shadow-sm mt-3">
+    <Card className="no-hover shadow-sm mt-3">
       <Card.Header className="d-flex justify-content-between align-items-center">
         <Button variant="outline-secondary" size="sm" onClick={onBack}>
           Back to Dashboard

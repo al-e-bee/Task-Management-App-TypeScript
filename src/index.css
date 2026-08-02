@@ -22,6 +22,16 @@ body {
   box-shadow: 0 8px 24px rgba(0, 19, 80, 0.102) !important;
 }
 
+.no-hover {
+  transform: none !important;
+  transition: none !important;
+}
+
+.no-hover:hover {
+  transform: none !important;
+  transition: none !important;
+}
+
 .card,
 .btn,
 .badge {
