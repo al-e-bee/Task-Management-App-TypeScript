@@ -10,7 +10,7 @@ body {
 }
 
 .card {
-  background-color: #fbfaf8;
+  background-color: #fbfaf8 !important;
   transition:
     transform 0.2s ease-in-out,
     box-shadow 0.2s ease-in-out;
@@ -28,13 +28,14 @@ body {
   border-radius: 8px;
 }
 
-.btn-primary {
-  background-color: #035397;
-  border-color: #035397;
-  color: #fff;
+.create-task-btn {
+  background-color: #fbfaf8;
+  border-color: #131515;
+  color: #131515;
 }
 
-.create-task-btn {
-  background-color: #ff5714;
-  border-color: #ff5714;
+.create-task-btn:hover {
+  background-color: #131515;
+  border-color: #131515;
+  color: #fbfaf8;
 }

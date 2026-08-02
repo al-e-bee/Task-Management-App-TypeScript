@@ -1,7 +1,7 @@
 // TaskDashboard.tsx
 // Implement a dashboard interface for managing tasks, including features like task lists, creation, editing, and deletion.
 import { useState } from "react";
-import { Col, Container, Row, Card, Button } from "react-bootstrap";
+import { Col, Container, Row, Card, Button, Badge } from "react-bootstrap";
 import type { Task } from "../types/tasks";
 import TaskDetail from "./TaskDetail";
 import TaskFormModal from "./TaskModal";
@@ -24,6 +24,64 @@ const TaskDashboard = () => {
     setSelectedTask(updatedTask);
   };
 
+  const pendingTasks = tasks.filter((t) => t.status === "Pending");
+  const inProgressTasks = tasks.filter((t) => t.status === "In Progress");
+  const completedTasks = tasks.filter((t) => t.status === "Completed");
+
+  const renderTaskColumn = (
+    columnTitle: string,
+    columnTasks: Task[],
+    borderHeaderColor: string,
+  ) => (
+    <Col lg={4} md={12} className="mb-4">
+      <div className="card p-3 bg-light rounded border h-100 shadow-sm">
+        <div
+          className="d-flex justify-content-between align-items-center mb-3 pb-2"
+          style={{ borderBottom: `3px solid ${borderHeaderColor}` }}
+        >
+          <h5 className="mb-0 fw-bold">{columnTitle}</h5>
+          <Badge bg="dark" pill>
+            {columnTasks.length}
+          </Badge>
+        </div>
+
+        {columnTasks.length === 0 ? (
+          <p className="text-muted text-center py-4 small">
+            No Tasks in this stage
+          </p>
+        ) : (
+          columnTasks.map((task) => (
+            <Card key={task.id} className="mb-3 shadow-sm border-0">
+              <Card.Body>
+                <Card.Title className="h6 fw-bold">{task.title}</Card.Title>
+                <Card.Text className="text-muted small text-truncate">
+                  {task.description || "No description provided."}
+                </Card.Text>
+                <div className="d-flex gap-2 mt-3">
+                  <Button
+                    variant="outline-primary"
+                    size="sm"
+                    onClick={() => setSelectedTask(task)}
+                  >
+                    View Details
+                  </Button>
+
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    onClick={() => handleDelete(task.id)}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          ))
+        )}
+      </div>
+    </Col>
+  );
+
   return (
     <Container className="mt-4">
       {selectedTask ? (
@@ -38,9 +96,9 @@ const TaskDashboard = () => {
         </Row>
       ) : (
         <>
-          <Row className="mb-3 align-items-center">
+          <Row className="mb-4 align-items-center">
             <Col className="d-flex justify-content-center">
-              <h2 className="main-title">Task Dashboard</h2>
+              <h2 className="main-title">Tasks</h2>
             </Col>
           </Row>
 
@@ -51,49 +109,15 @@ const TaskDashboard = () => {
                 onClick={() => setShowCreateModal(true)}
                 className="create-task-btn"
               >
-                + Create Task
+                Create Task
               </Button>
             </Col>
           </Row>
 
           <Row>
-            {tasks.map((task) => (
-              <Col md={4} key={task.id} className="mb-3">
-                <Card
-                  className="card h-100 shadow-sm"
-                  style={{
-                    borderLeft: `5px solid ${task.status === "Completed" ? "#10b981" : task.status === "In Progress" ? "#f59e0b" : "#6b7280"}`,
-                  }}
-                >
-                  <Card.Body className="d-flex flex-column align-items-center p-2">
-                    <Card.Title>{task.title}</Card.Title>
-                    <Card.Text className="text-truncate">
-                      {task.description}
-                    </Card.Text>
-                    <Card.Subtitle className="mb-3 text-muted">
-                      Status: <strong>{task.status}</strong>
-                    </Card.Subtitle>
-                    <div className="mt-auto mb-2 d-flex gap-2">
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => setSelectedTask(task)}
-                      >
-                        View Details
-                      </Button>
-
-                      <Button
-                        variant="outline-danger"
-                        size="sm"
-                        onClick={() => handleDelete(task.id)}
-                      >
-                        Delete Task
-                      </Button>
-                    </div>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
+            {renderTaskColumn("Pending", pendingTasks, "#1540ff")}
+            {renderTaskColumn("In Progress", inProgressTasks, "#ffc107")}
+            {renderTaskColumn("Completed", completedTasks, "#198754")}
           </Row>
 
           <TaskFormModal
