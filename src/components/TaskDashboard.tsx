@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Col, Container, Row, Card, Button, Badge } from "react-bootstrap";
 import type { Task } from "../types/tasks";
 import TaskDetail from "./TaskDetail";
+import TaskFormModal from "./TaskModal";
 
 const initialTasks: Task[] = [
   {
@@ -25,6 +26,7 @@ const initialTasks: Task[] = [
 const TaskDashboard = () => {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   const handleDelete = (id: string) => {
     setTasks(tasks.filter((task) => task.id !== id));
@@ -36,6 +38,14 @@ const TaskDashboard = () => {
   const handleUpdateTask = (updatedTask: Task) => {
     setTasks(tasks.map((t) => (t.id === updatedTask.id ? updatedTask : t)));
     setSelectedTask(updatedTask);
+  };
+
+  const handleAddTask = (newTaskData: Omit<Task, "id">) => {
+    const newTask: Task = {
+      ...newTaskData,
+      id: Date.now().toString(),
+    };
+    setTasks((prev) => [newTask, ...prev]);
   };
 
   return (
@@ -52,9 +62,17 @@ const TaskDashboard = () => {
         </Row>
       ) : (
         <>
-          <Row className="mb-3">
+          <Row className="mb-3 align-items-center">
             <Col>
               <h2>Task Dashboard</h2>
+            </Col>
+            <Col className="text-end">
+              <Button
+                variant="primary"
+                onClick={() => setShowCreateModal(true)}
+              >
+                + Create Task
+              </Button>
             </Col>
           </Row>
 
@@ -80,7 +98,7 @@ const TaskDashboard = () => {
                         Status: {task.status}
                       </Badge>
                     </Card.Subtitle>
-                    <div className="mt-auto d-flex gap-2">
+                    <div className="mt-auto mb-3 d-flex gap-2">
                       <Button
                         variant="primary"
                         size="sm"
@@ -101,6 +119,12 @@ const TaskDashboard = () => {
               </Col>
             ))}
           </Row>
+
+          <TaskFormModal
+            show={showCreateModal}
+            onHide={() => setShowCreateModal(false)}
+            onAddTask={handleAddTask}
+          />
         </>
       )}
     </Container>
