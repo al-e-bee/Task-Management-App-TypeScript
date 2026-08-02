@@ -1,11 +1,11 @@
-import { Container } from "react-bootstrap";
+import { TaskProvider } from "./context/TaskContext";
 import TaskDashboard from "./components/TaskDashboard";
 
 function App() {
   return (
-    <Container>
+    <TaskProvider>
       <TaskDashboard />
-    </Container>
+    </TaskProvider>
   );
 }
 

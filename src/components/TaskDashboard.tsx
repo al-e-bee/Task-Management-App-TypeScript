@@ -5,47 +5,23 @@ import { Col, Container, Row, Card, Button, Badge } from "react-bootstrap";
 import type { Task } from "../types/tasks";
 import TaskDetail from "./TaskDetail";
 import TaskFormModal from "./TaskModal";
-
-const initialTasks: Task[] = [
-  {
-    id: "1",
-    title: "Setup Auth0",
-    description: "Configure auth provider",
-    status: "Pending",
-    priority: "High",
-  },
-  {
-    id: "2",
-    title: "Build Dashboard",
-    description: "Display list of tasks",
-    status: "In Progress",
-    priority: "High",
-  },
-];
+import { useTasks } from "../context/TaskContext";
 
 const TaskDashboard = () => {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const { tasks, deleteTask, updateTask, addTask } = useTasks();
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   const handleDelete = (id: string) => {
-    setTasks(tasks.filter((task) => task.id !== id));
+    deleteTask(id);
     if (selectedTask?.id === id) {
       setSelectedTask(null);
     }
   };
 
   const handleUpdateTask = (updatedTask: Task) => {
-    setTasks(tasks.map((t) => (t.id === updatedTask.id ? updatedTask : t)));
+    updateTask(updatedTask);
     setSelectedTask(updatedTask);
-  };
-
-  const handleAddTask = (newTaskData: Omit<Task, "id">) => {
-    const newTask: Task = {
-      ...newTaskData,
-      id: Date.now().toString(),
-    };
-    setTasks((prev) => [newTask, ...prev]);
   };
 
   return (
@@ -123,7 +99,7 @@ const TaskDashboard = () => {
           <TaskFormModal
             show={showCreateModal}
             onHide={() => setShowCreateModal(false)}
-            onAddTask={handleAddTask}
+            onAddTask={addTask}
           />
         </>
       )}
