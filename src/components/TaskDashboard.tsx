@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Col, Container, Row, Card, Button, Badge } from "react-bootstrap";
 import type { Task } from "../types/tasks";
 import TaskDetail from "./TaskDetail";
-import TaskFormModal from "./TaskModal";
+import TaskFormModal from "./TaskFormModal";
 import { useTasks } from "../context/TaskContext";
 
 const TaskDashboard = () => {

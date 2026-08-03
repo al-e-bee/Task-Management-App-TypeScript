@@ -1,5 +1,5 @@
 // TaskDetail.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Button, Form, Badge, Stack } from "react-bootstrap";
 import type { Task } from "../types/tasks";
 
@@ -16,6 +16,10 @@ const TaskDetail: React.FC<TaskDetailProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<Task>(task);
+
+  useEffect(() => {
+    setFormData(task);
+  }, [task]);
 
   const handleChange = (
     e: React.ChangeEvent<
