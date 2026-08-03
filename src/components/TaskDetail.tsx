@@ -1,6 +1,6 @@
 // TaskDetail.tsx
 import React, { useState, useEffect } from "react";
-import { Card, Button, Form, Badge, Stack } from "react-bootstrap";
+import { Card, Button, Form, Badge, Stack, Alert } from "react-bootstrap";
 import type { Task } from "../types/tasks";
 
 interface TaskDetailProps {
@@ -16,6 +16,7 @@ const TaskDetail: React.FC<TaskDetailProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<Task>(task);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setFormData(task);
@@ -35,7 +36,22 @@ const TaskDetail: React.FC<TaskDetailProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onUpdateTask(formData);
+    if (!formData.title.trim()) {
+      setError("Task title cannot be empty!");
+      return;
+    }
+    setError(null);
+    onUpdateTask({
+      ...formData,
+      title: formData.title.trim(),
+      description: formData.description ? formData.description.trim() : "",
+    });
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setError(null);
+    setFormData(task);
     setIsEditing(false);
   };
 
@@ -75,6 +91,15 @@ const TaskDetail: React.FC<TaskDetailProps> = ({
           </div>
         ) : (
           <Form onSubmit={handleSubmit}>
+            {error && (
+              <Alert
+                variant="danger"
+                onClose={() => setError(null)}
+                dismissible
+              >
+                {error}
+              </Alert>
+            )}
             <Form.Group className="mb-3" controlId="taskTitle">
               <Form.Label>Task Title</Form.Label>
               <Form.Control
@@ -114,10 +139,7 @@ const TaskDetail: React.FC<TaskDetailProps> = ({
               <Button variant="success" type="submit">
                 Save Changes
               </Button>
-              <Button
-                variant="outline-secondary"
-                onClick={() => setIsEditing(false)}
-              >
+              <Button variant="outline-secondary" onClick={handleCancel}>
                 Cancel
               </Button>
             </Stack>
